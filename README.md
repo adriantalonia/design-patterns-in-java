@@ -12,7 +12,15 @@ This repository is dedicated to exploring various design patterns in Java, demon
 
 - Java 21
 
-## Design Patterns Covered
+## [SOLID Principles](src/_01_solid_principles/README.md) 🔗
+1. Single Responsibility
+2. Open/Closed
+3. Liskov Substitution
+4. Interface Segregation
+5. Dependency Inversion
+
+
+## [Design Patterns Covered](src/_02_design_patterns/README.md) 🔗
 
 In this repository, we delve into several fundamental design patterns categorized by their purpose. Each pattern includes a separate directory containing the example code and a README explaining the context and usage of the pattern.
 
