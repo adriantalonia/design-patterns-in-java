@@ -102,3 +102,33 @@ This employee has 3.2 years of experience.
 The employee id: K721
 This employee is a Junior
 ```
+
+## Analysis
+
+What is the problem with this design? This answer is that I violate the SRP here. You
+can see that displaying an employee detail, generating an employee id, or checking a
+seniority level are all different activities. Since I put everything in a single class, I may
+face problems adopting new changes in the future. Here are some possible reasons:
+
+- The top management can set a different criterion to decide a
+seniority level.
+- They can also use a complex algorithm to generate the employee id.
+
+In each case, I’ll need to modify the Employee class. Now you understand that it is
+better to follow the SRP and separate these activities.
+
+## Better Program
+In the following demonstration, I introduce two more classes. The **SeniorityChecker**
+class now contains the _checkSeniority_() method and the **EmployeeIdGenerator** class
+contains the _generateEmpId_(...) method to generate the employee id. As a result, in
+the future, if I need to change the program logic to determine the seniority level or use
+a new algorithm to generate an employee id, I can make the changes in the respective
+classes. Other classes are untouched, so I do not need to retest those classes.
+
+To improve the code readability and avoid clumsiness inside the main() method, I
+use the static method _showEmpDetail_(...). This method calls the _displayEmpDetail_()
+method from Employee, the generateEmpId() method from **EmployeeIdGenerator**,
+and the _checkSeniority_() method from **SeniorityChecker**. You understand
+that this method was not necessary, but it makes the client code simple and easily
+understandable.
+
