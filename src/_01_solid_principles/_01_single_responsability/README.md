@@ -132,3 +132,85 @@ and the _checkSeniority_() method from **SeniorityChecker**. You understand
 that this method was not necessary, but it makes the client code simple and easily
 understandable.
 
+**Code:**
+```java
+public class EmployeeSRP {
+    public String firstName, lastName, empId;
+    public double experienceInYears;
+    public EmployeeSRP(String firstName, String lastName, double experienceInYears) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.experienceInYears = experienceInYears;
+    }
+
+    public void displayEmpDetails() {
+        System.out.println("The employee name: " + lastName + ", " + firstName);
+        System.out.println("This employee has " + experienceInYears + " years of experience.");
+    }
+}
+```
+
+```java
+public class EmployeeIdGenerator {
+    String empId;
+    public String generateEmpId(String empFirstName) {
+        int random = new Random().nextInt(1000);
+        empId = empFirstName.substring(0, 1) + random;
+        return empId;
+    }
+}
+```
+
+```java
+public class SeniorityChecker {
+    public String checkSeniority(double experienceInYears) {
+        return experienceInYears > 5 ? "senior" : "junior";
+    }
+}
+```
+
+```java
+public class ClientSRP {
+
+    public static void main(String[] args) {
+        System.out.println("*** A demo that follows the SRP.***");
+
+        EmployeeSRP robin = new EmployeeSRP("Robin", "Smith", 7.5);
+        showEmpDetail(robin);
+
+        System.out.println("\n*******\n");
+        EmployeeSRP kevin = new EmployeeSRP("Kevin", "Proctor", 3.2);
+        showEmpDetail(kevin);
+    }
+
+    private static void showEmpDetail(EmployeeSRP emp) {
+        // Display employee detail
+        emp.displayEmpDetails();
+
+        // Generate the ID
+        EmployeeIdGenerator idGenerator = new EmployeeIdGenerator();
+        String empId = idGenerator.generateEmpId(emp.firstName);
+        System.out.println("The employee id: " + empId);
+
+        // Check the seniority level
+        SeniorityChecker seniorityChecker = new SeniorityChecker();
+        System.out.println("This employee is a " + seniorityChecker.checkSeniority(emp.experienceInYears) + " employee.");
+    }
+
+}
+```
+
+### POINT TO NOTE:
+
+Note that the SRP does not say that a class should have at most one method. Here the
+emphasis is on the single responsibility. There may be closely related methods that can help
+you to implement a responsibility. For example, if you have different methods to display the
+first name, the last name, and a full name, you can put these methods in the same class.
+These methods are closely related, and it makes sense to place all these display methods
+inside the same class.
+
+In addition, you should not conclude that you should always separate responsibilities in every
+application that you make. You need to analyze the change’s nature. It is because too many
+classes can make your application complex and thus difficult to maintain. But if you know
+this principle and think carefully before you implement a design, you are likely to avoid the
+mistakes discussed earlier.

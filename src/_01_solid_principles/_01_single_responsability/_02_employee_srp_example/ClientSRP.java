@@ -1,7 +1,5 @@
 package _01_solid_principles._01_single_responsability._02_employee_srp_example;
 
-import org.w3c.dom.ls.LSOutput;
-
 public class ClientSRP {
 
     public static void main(String[] args) {
