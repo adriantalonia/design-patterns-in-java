@@ -214,3 +214,191 @@ entire code workflow again.
 You understand the problem now. In this demonstration, every time the distinction
 criteria changes, you need to modify the evaluateDistinction() method in the
 DistinctionDecider class. **_So, this class is not closed for modification._**
+
+## Better Program
+
+To tackle this problem, you can write a better program. The following program shows
+such an example. It’s written following the OCP principle that suggests we **write code
+segments (such as classes, or methods) that are open for extension but closed for
+modification.**
+
+> The OCP can be achieved in different ways, but **abstraction** is the heart of this
+principle. If you can design your application following the OCP, your application is
+flexible and extensible. It is not always easy to fully implement this principle, but
+partial OCP compliance can generate greater benefit to you. Also notice that you
+started demonstration 3 following the SRP. If you do not follow the OCP, you may
+end up with a class that performs multiple tasks, which means the SRP is broken.
+
+**Code:**
+```java
+abstract class StudentOCP {
+    String name;
+    String regNumber;
+    String department;
+    double score;
+
+    public StudentOCP(String name, String regNumber, double score) {
+        this.name = name;
+        this.regNumber = regNumber;
+        this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return ("Name: " + name +
+                "\nReg Number: " + regNumber +
+                "\nDepartment: " + department +
+                "\nScore: " + score +"\n");
+    }
+}
+```
+
+```java
+public class ArtsStudent extends StudentOCP {
+    public ArtsStudent(String name, String regNumber, double score, String dept) {
+        super(name, regNumber, score);
+        this.department = dept;
+    }
+}
+
+public class ScienceStudent extends StudentOCP {
+  public ScienceStudent(String name, String regNumber, double score, String dept) {
+    super(name, regNumber, score);
+    this.department = dept;
+  }
+}
+```
+
+```java
+public interface DistinctionDecider {
+    void evaluateDistinction(StudentOCP student);
+}
+
+public class ScienceDistinctionDecider implements DistinctionDecider {
+  @Override
+  public void evaluateDistinction(StudentOCP student) {
+    if (student.score > 80) {
+      System.out.println(student.regNumber + " has received a distinction in science.");
+    }
+  }
+}
+
+public class ArtsDistinctionDecider implements DistinctionDecider {
+  @Override
+  public void evaluateDistinction(StudentOCP student) {
+    if (student.score > 70) {
+      System.out.println(student.regNumber + " has received a distinction in arts.");
+    }
+  }
+}
+```
+
+```java
+public class ClientOCP {
+
+    public static void main(String[] args) {
+        System.out.println("*** A demo OCP.***");
+        List<StudentOCP> enrollScienceStudents = enrollScienceStudents();
+        List<StudentOCP> enrollArtsStudents = enrollArtsStudents();
+        List<StudentOCP> enrollStudents = new ArrayList<>();
+        enrollStudents.addAll(enrollScienceStudents);
+        enrollStudents.addAll(enrollArtsStudents);
+
+        System.out.println("===Results:===");
+        for (StudentOCP student : enrollStudents) {
+            System.out.println(student);
+        }
+
+        System.out.println("===Distinctions:===");
+        DistinctionDecider scienceDistinctionDecider = new ScienceDistinctionDecider();
+        DistinctionDecider artsDistinctionDecider = new ArtsDistinctionDecider();
+
+        for (StudentOCP student : enrollScienceStudents) {
+            scienceDistinctionDecider.evaluateDistinction(student);
+        }
+
+        for (StudentOCP student : enrollArtsStudents) {
+            artsDistinctionDecider.evaluateDistinction(student);
+        }
+    }
+
+    private static List<StudentOCP> enrollScienceStudents() {
+        StudentOCP sam = new ScienceStudent("Sam","R1",81.5,"Comp.Sc.");
+        StudentOCP bob = new ScienceStudent("Bob","R2",72,"Physics");
+        List<StudentOCP> scienceStudents = new ArrayList<StudentOCP>();
+        scienceStudents.add(sam);
+        scienceStudents.add(bob);
+        return scienceStudents;
+    }
+
+    private static List<StudentOCP> enrollArtsStudents() {
+        StudentOCP john = new ArtsStudent("John", "R3", 71,"History");
+        StudentOCP kate = new ArtsStudent("Kate", "R4", 66.5,"English");
+        List<StudentOCP> artsStudents = new ArrayList<StudentOCP>();
+        artsStudents.add(john);
+        artsStudents.add(kate);
+        return artsStudents;
+    }
+}
+```
+
+**Results:**
+```
+
+*** A demo that follows the OCP.***
+===Results:===
+Name: Sam
+Reg Number: R1
+Department: Comp.Sc.
+Score: 81.5
+
+Name: Bob
+Reg Number: R2
+Department: Physics
+Score: 72.0
+
+Name: John
+Reg Number: R3
+Department: History
+Score: 71.0
+
+Name: Kate
+Reg Number: R4
+Department: English
+Score: 66.5
+
+===Distinctions:===
+R1 has received a distinction in science.
+R3 has received a distinction in arts.
+```
+
+## Analysis
+
+What are the key advantages now? The following points tell you the answers:
+
+- The **StudentOCP** class and **DistinctionDecider** are both unchanged
+  for any future changes in the distinction criteria. They are closed for
+  modification.
+- Notice that every participant follows the SRP.
+- Suppose you need to consider a new stream, say commerce. Then
+  you can create a new class such as CommerceStudent. Notice that
+  in a case like this, you do not need to touch the ArtsStudent or
+  ScienceStudent classes.
+- Similarly, when you consider different evaluation criteria for a
+  different stream such as commerce, you can add a new derived
+  class such as **CommerceDistinctionDecider** that implements the
+  **DistinctionDecider** **interface** and you can set new distinction
+  criteria for commerce students. In this case, you do not need to alter
+  any existing class in the **DistinctionDecider** hierarchy. Obviously,
+  the client code needs to adopt this change.
+- Using this approach, you avoid an **if-else** chain (shown in
+  demonstration 3). This chain could grow if you consider new
+  streams such as commerce following the approach that is shown
+  in demonstration 3. Remember that avoiding a big if-else chain
+  is always considered a better practice. It is because avoiding the
+  if-else chains lowers the cyclomatic complexity of a program and
+  produces better code. (Cyclomatic complexity is a software metric
+  to indicate the complexity of a program. It indicates the number
+  of paths through a particular piece of code. So, in simple terms,
+  by lowering the cyclomatic complexity you make your code easily
+  readable and testable.)
