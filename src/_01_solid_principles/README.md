@@ -5,6 +5,7 @@
   * [1. Single Responsibility Principle(SRP) 🔗](#1-single-responsibility-principle--srp--)
   * [2. Open/Close Principle (OCP) 🔗](#2-openclose-principle--ocp--)
   * [3. Liskov’s Substitution Principle 🔗](#3-liskovs-substitution-principle-)
+  * [4. Interface Segregation Principle 🔗](#4-interface-segregation-principle-)
 <!-- TOC -->
 
 In software development, **Object-Oriented Design** plays a crucial role when it comes to writing flexible, scalable, maintainable, and reusable code. There are so many benefits of using OOD but every developer should also know the SOLID principle for good object-oriented design in programming. The SOLID principle was introduced by Robert C. Martin, also known as Uncle Bob and it is a coding standard in programming. 
@@ -47,3 +48,15 @@ Let’s understand Liskov’s Substitution Principle using an example:
 > One of the classic examples of this principle is a rectangle having four sides. A rectangle’s height can be any value and width can be any value. A square is a rectangle with equal width and height. So we can say that we can extend the properties of the rectangle class into square class.
 
 In order to do that you need to swap the child (square) class with parent (rectangle) class to fit the definition of a square having four equal sides but a derived class does not affect the behavior of the parent class so if you will do that it will violate the Liskov Substitution Principle.
+
+## [4. Interface Segregation Principle](_04_interface_segregation/README.md) 🔗
+
+This principle is the first principle that applies to Interfaces instead of classes in SOLID and it is similar to the single responsibility principle. It states that “do not force any client to implement an interface which is irrelevant to them“. Here your main goal is to focus on avoiding fat interface and give preference to many small client-specific interfaces. You should prefer many client interfaces rather than one general interface and each interface should have a specific responsibility.
+
+Let’s understand Interface Segregation Principle using an example:
+
+> Suppose if you enter a restaurant and you are pure vegetarian. The waiter in that restaurant gave you the menu card which includes vegetarian items, non-vegetarian items, drinks, and sweets.
+
+* In this case, as a customer, you should have a menu card which includes only vegetarian items, not everything which you don’t eat in your food. Here the menu should be different for different types of customers.
+* The common or general menu card for everyone can be divided into multiple cards instead of just one. Using this principle helps in reducing the side effects and frequency of required changes.
+
