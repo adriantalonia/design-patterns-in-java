@@ -60,3 +60,15 @@ Let’s understand Interface Segregation Principle using an example:
 * In this case, as a customer, you should have a menu card which includes only vegetarian items, not everything which you don’t eat in your food. Here the menu should be different for different types of customers.
 * The common or general menu card for everyone can be divided into multiple cards instead of just one. Using this principle helps in reducing the side effects and frequency of required changes.
 
+## [5. Dependency Inversion Principle](_05_dependency_inversion/README.md) 🔗
+
+The Dependency Inversion Principle (DIP) is a principle in object-oriented design that states that “High-level modules should not depend on low-level modules. Both should depend on abstractions“. Additionally, abstractions should not depend on details. Details should depend on abstractions.
+
+- In simpler terms, the DIP suggests that classes should rely on abstractions (e.g., interfaces or abstract classes) rather than concrete implementations.
+- This allows for more flexible and decoupled code, making it easier to change implementations without affecting other parts of the codebase.
+
+Let’s understand Dependency Inversion Principle using an example:
+
+> In a software development team, developers depend on an abstract version control system (e.g., Git) to manage and track changes to the codebase. They don’t depend on specific details of how Git works internally.
+
+This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
