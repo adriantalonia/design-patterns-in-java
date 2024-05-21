@@ -29,3 +29,12 @@ principle.
 ---
 
 ## Initial Program
+
+Assume that you have a two-layer application. Using this application, a user can save an
+employee ID in a database. To demonstrate this, let’s use a console application instead of
+a GUI application. You have two classes, UserInterface and OracleDatabase. As per its
+name, UserInterface represents a user interface such as a form where a user can type
+an employee ID and click the Save button to save the ID in a database. OracleDatabase
+is used to mimic an Oracle database. Again, for simplicity, there is no actual database in
+this application and there is no code to validate an employee ID. Here your focus is on
+the DIP only, so those discussions are not important.
