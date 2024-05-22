@@ -6,6 +6,9 @@
   * [2. Open/Close Principle (OCP) 🔗](#2-openclose-principle--ocp--)
   * [3. Liskov’s Substitution Principle 🔗](#3-liskovs-substitution-principle-)
   * [4. Interface Segregation Principle 🔗](#4-interface-segregation-principle-)
+  * [5. Dependency Inversion Principle 🔗](#5-dependency-inversion-principle-)
+  * [Summary](#summary)
+  * [Q&A](#qa)
 <!-- TOC -->
 
 In software development, **Object-Oriented Design** plays a crucial role when it comes to writing flexible, scalable, maintainable, and reusable code. There are so many benefits of using OOD but every developer should also know the SOLID principle for good object-oriented design in programming. The SOLID principle was introduced by Robert C. Martin, also known as Uncle Bob and it is a coding standard in programming. 
@@ -72,3 +75,184 @@ Let’s understand Dependency Inversion Principle using an example:
 > In a software development team, developers depend on an abstract version control system (e.g., Git) to manage and track changes to the codebase. They don’t depend on specific details of how Git works internally.
 
 This allows developers to focus on writing code without needing to understand the intricacies of version control implementation.
+
+## Summary
+
+The SOLID principles are the fundamental guidelines in object-oriented design. They
+are high-level concepts that help you develop better software. They are neither rules nor
+laws, but they help you think of possible scenarios/outcomes in advance.
+
+## Q&A
+
+1. **What are the SOLID principles in Java?**
+
+   The SOLID principles are a set of five design principles that help developers create more maintainable and scalable software.
+
+   - **Single Responsibility Principle (SRP):**
+     A class should have only one reason to change. It should have only one responsibility.
+   - **Open/Closed Principle (OCP):**
+     Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification. You should be able to add new functionality without altering existing code.
+   - **Liskov Substitution Principle (LSP):**
+     Subtypes must be substitutable for their base types without altering the correctness of the program. Derived classes should be able to replace their base classes without causing errors.
+   - **Interface Segregation Principle (ISP):**
+     Clients should not be forced to depend on interfaces they do not use. It's better to have multiple specific interfaces than one large, general-purpose interface.
+   - **Dependency Inversion Principle (DIP):**
+     High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details; details should depend on abstractions.
+
+
+2. **Explain the Single Responsibility Principle (SRP) with an example in Java.**
+   
+    SRP states that a class should have only one reason to change. In Java, this means that a class should have only one responsibility.
+```java
+// Bad example violating SRP   
+class Employee {       
+    void calculateSalary() {           
+        // Calculate employee salary       
+    }       
+    void saveToDatabase() {           
+        // Save employee data to the database       
+    }   
+}
+```
+In the above code, the Employee class has two responsibilities: calculating the salary and saving to the database. It would be better to have separate classes for these tasks to adhere to SRP.
+
+3. **How does the Open/Closed Principle (OCP) promote extensibility in Java?**
+    
+    OCP encourages software entities to be open for extension but closed for modification. This means you can add new functionality without altering existing code. In Java, this is often achieved through inheritance and interfaces.
+
+```java
+ // Example of OCP
+interface Shape {
+    double area();
+}
+
+class Circle implements Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI radius radius;
+    }
+}
+
+
+class Square implements Shape {
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    public double area() {
+        return side * side;
+    }
+}
+```
+Here, you can add new shapes Triangle without modifying the existing Shape interface or classes, demonstrating the open-for-extension, and closed-for modification principle.
+
+
+4. **Explain the Liskov Substitution Principle (LSP) and its importance in Java?**
+
+   LSP states that derived classes (subtypes) must be substitutable for their base classes without altering the correctness of the program. In Java, this ensures that when you use a subclass, it should behave in a way that is consistent with the superclass. This principle is crucial for ensuring the polymorphic behavior of objects in inheritance hierarchies.
+
+```java
+class Shape {
+    public void draw() {
+        System.out.println("Drawing a shape");
+    }
+}
+
+class Circle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Circle");
+    }
+}
+
+class Square extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Square");
+    }
+}
+
+class Program {
+    static void DrawShape(Shape shape) {
+        shape.draw();
+    }
+
+    public static void main(String[] args) {
+        Shape shape1 = new Circle();
+        Shape shape2 = new Square();
+
+        DrawShape(shape1); // Outputs: Drawing a circle
+        DrawShape(shape2); // Outputs: Drawing a square
+    }
+}
+```
+
+
+5. **How does the Interface Segregation Principle (ISP) improve design in Java?**
+    
+    ISP suggests that clients should not be forced to depend on interfaces they do not use. In Java, this means that interfaces should be tailored to specific client needs rather than having a single large interface. This improves code maintainability and avoids unnecessary dependencies.
+
+```java
+ // Bad example violating ISP   
+interface Worker {
+    void work();
+    void eat();
+}
+
+class Engineer implements Worker {
+    public void work() {
+    // Engineer working       
+    }
+
+    public void eat() {
+    // Engineer eating       
+    }
+}
+```
+It's better to have separate interfaces like Workable and Eatable to adhere to ISP.
+
+6. **Explain how the Dependency Inversion Principle promotes flexibility in Java.**
+   
+    DIP states that high-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details; details should depend on abstractions. In Java, this is often achieved through the use of interfaces and dependency injection. It promotes flexibility by allowing you to change implementations without affecting high-level modules.
+
+```java
+// High-level module   
+class ReportGenerator {
+    private DataSource dataSource;
+
+    public ReportGenerator(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public String generateReport() {
+        // Generate report using dataSource       
+    }
+}
+
+// Low-level module   
+interface DataSource {
+    String getData();
+}
+
+class DatabaseDataSource implements DataSource {
+    public String getData() {
+// Get data from the database       
+    }
+}
+
+class FileDataSource implements DataSource {
+
+    public String getData() {
+// Read data from a file       
+    }
+}
+``` 
+With DIP and dependency injection, you can easily switch between DatabaseDataSource and FileDataSource without changing the ReportGenerator class, promoting flexibility and maintainability.
+
