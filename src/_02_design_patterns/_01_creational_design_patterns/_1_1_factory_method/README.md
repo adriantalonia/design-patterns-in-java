@@ -221,7 +221,8 @@ public class GFG {
         Client fourWheelerClient = new Client(fourWheelerFactory);
         Vehicle fourWheeler = fourWheelerClient.getVehicle();
         fourWheeler.printVehicle();
-
+    }
+}
 ```
 
 **Output:**
@@ -229,3 +230,46 @@ public class GFG {
 I am two wheeler
 I am four wheeler
 ```
+
+**In the above code:**
+
+- **Vehicle** serves as the Product interface, defining the common method printVehicle() that all concrete products must implement.
+- **TwoWheeler and FourWheeler** are concrete product classes representing different types of vehicles, implementing the printVehicle() method.
+- **VehicleFactory** acts as the Creator interface (Factory Interface) with a method createVehicle() representing the factory method.
+- **TwoWheelerFactory and FourWheelerFactory** are concrete creator classes (Concrete Factories) implementing the VehicleFactory interface to create instances of specific types of vehicles.
+
+## Use Cases of the Factory Method Design Pattern
+
+- **Creational Frameworks**
+JDBC (Java Database Connectivity) uses factories extensively for creating connections, statements, and result sets. Dependency injection frameworks like Spring and Guice rely heavily on factories to create and manage beans.
+- **GUI Toolkits:**
+Swing and JavaFX use factories to create UI components like buttons, text fields, and labels, allowing for customization and flexibility in UI design.
+- **Logging Frameworks:**
+Logging frameworks like Log4j and Logback use factories to create loggers with different configurations, enabling control over logging levels and output destinations.
+- **Serialization and Deserialization:**
+Object serialization frameworks often use factories to create objects from serialized data, supporting different serialization formats and versioning.
+- **Plugin Systems:**
+Plugin-based systems often use factories to load and create plugin instances dynamically, allowing for extensibility and customization.
+- **Game Development:**
+Game engines often use factories to create different types of game objects, characters, and levels, promoting code organization and flexibility.
+- **Web Development:**
+Web frameworks sometimes use factories to create view components, controllers, and services, enabling modularity and testability in web applications.
+
+## Advantages of Factory Method Design Pattern
+The advantages of Factory Method Design Pattern are:
+
+- **Decoupling:** It separates object creation logic from the client code that uses those objects. This makes the code more flexible and maintainable because changes to the creation process don’t require modifications to client code.
+- **Extensibility:** It’s easy to introduce new product types without changing the client code. You simply need to create a new Concrete Creator subclass and implement the factory method to produce the new product.
+- **Testability:** It simplifies unit testing by allowing you to mock or stub out product creation during tests. You can test different product implementations in isolation without relying on actual object creation.
+- **Code Reusability:** The factory method can be reused in different parts of the application where object creation is needed. This promotes centralizing and reusing object creation logic.
+- **Encapsulation:** It hides the concrete product classes from the client code, making the code less dependent on specific implementations. This improves maintainability and reduces coupling.
+
+## Disadvantages of Factory Method Design Pattern
+The disavantages of Factory Method Design Pattern are:
+
+- **Increased Complexity:** It introduces additional classes and interfaces, adding a layer of abstraction that can make the code more complex to understand and maintain, especially for those unfamiliar with the pattern.
+- **Overhead:** The use of polymorphism and dynamic binding can slightly impact performance, although this is often negligible in most applications.
+- **Tight Coupling Within Product Hierarchies:** Concrete Creators are still tightly coupled to their corresponding Concrete Products. Changes to one often necessitate changes to the other.
+- **Dependency on Concrete Subclasses:** The client code still depends on the abstract Creator class, requiring knowledge of its concrete subclasses to make correct factory method calls.
+- **Potential for Overuse:** It’s important to use the Factory Method pattern judiciously to avoid over-engineering the application. Simple object creation can often be handled directly without the need for a factory.
+- **Testing Challenges:** Testing the factory logic itself can be more complex.
