@@ -54,7 +54,7 @@ There are three types of Design Patterns:
 ### [1.1 Factory Method](_01_creational_design_patterns/_1_1_factory_method/README.md)
 Factory Method is a creational design pattern, that provide an interface for creating objects in superclass, but subclasses are responsible to create the instance of the class.
 
-### 1.2 Abstract Factory Method
+### [1.2 Abstract Factory Method](_01_creational_design_patterns/_1_2_abstract_factory_method/README.md)
 Abstract Factory Method is a creational design pattern, it provides an interface for creating families of related or dependent objects without specifying their concrete classes.
 
 ### 1.3 Builder Method
