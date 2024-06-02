@@ -138,6 +138,13 @@ public class OracleDatabaseIDP implements Database {
   }
 }
 
+public class MySQLDatabase implements Database {
+  @Override
+  public void saveEmpIdInDatabase(String empId) {
+    System.out.println("The id: " + empId + " is saved in the MySQL database.");
+  }
+}
+
 public class UserInterfaceIDP {
   Database database;
 
@@ -147,13 +154,6 @@ public class UserInterfaceIDP {
 
   public void saveEmployeeId(String empId) {
     database.saveEmpIdInDatabase(empId);
-  }
-}
-
-public class MySQLDatabase implements Database {
-  @Override
-  public void saveEmpIdInDatabase(String empId) {
-    System.out.println("The id: " + empId + " is saved in the MySQL database.");
   }
 }
 

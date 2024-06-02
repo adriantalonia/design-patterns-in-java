@@ -13,6 +13,9 @@
     * [Example Diagram](#example-diagram)
     * [Code](#code)
   * [Advantages of using Abstract Factory Pattern](#advantages-of-using-abstract-factory-pattern)
+  * [Disadvantages of using Abstract Factory Pattern](#disadvantages-of-using-abstract-factory-pattern)
+  * [When to use Abstract Factory Pattern](#when-to-use-abstract-factory-pattern)
+  * [When not to use Abstract Factory Pattern](#when-not-to-use-abstract-factory-pattern)
 <!-- TOC -->
 
 The Abstract Factory Pattern is a creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes, in simpler terms the Abstract Factory Pattern is a way of organizing how you create groups of things that are related to each other.
