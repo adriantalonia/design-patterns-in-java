@@ -7,11 +7,15 @@
   * [What is the Abstract Factory Pattern?](#what-is-the-abstract-factory-pattern)
   * [Components of Abstract Factory Pattern](#components-of-abstract-factory-pattern)
     * [Structure](#structure)
-  * [Abstract Factory example](#abstract-factory-example)
+  * [Abstract Factory example (CarFactory)](#abstract-factory-example-carfactory)
     * [What can be the challenges while implementing this system?](#what-can-be-the-challenges-while-implementing-this-system)
     * [How Abstracy Factory Pattern help to solve above challenges?](#how-abstracy-factory-pattern-help-to-solve-above-challenges)
     * [Example Diagram](#example-diagram)
     * [Code](#code)
+  * [Abstract Factory example (FurnitureFactory)](#abstract-factory-example-furniturefactory)
+    * [Explanation of the Code](#explanation-of-the-code)
+    * [Diagram](#diagram)
+    * [Code](#code-1)
   * [Advantages of using Abstract Factory Pattern](#advantages-of-using-abstract-factory-pattern)
   * [Disadvantages of using Abstract Factory Pattern](#disadvantages-of-using-abstract-factory-pattern)
   * [When to use Abstract Factory Pattern](#when-to-use-abstract-factory-pattern)
@@ -63,7 +67,7 @@ The Abstract Factory Pattern is a way of organizing how you create groups of thi
 ### Structure
 ![img](/src/resources/img/creational/abstract_factory/abstract-factory-structure-diagram.png)
 
-## Abstract Factory example
+## Abstract Factory example (CarFactory)
 
 > Imagine you’re managing a global car manufacturing company. You want to design a system to create cars with specific configurations for different regions, such as North America and Europe. Each region may have unique requirements and regulations, and you want to ensure that cars produced for each region meet those standards.
 
@@ -185,6 +189,182 @@ Assembling Hatchback car.
 Europe Car Specification: Fuel efficiency and emissions compliant with EU standards.
 ```
 
+## Abstract Factory example (FurnitureFactory)
+
+### Explanation of the Code
+
+1. **Abstract Products (Chair and Table):** These are interfaces defining the types of products that can be created (e.g., Chair and Table). Each interface has methods relevant to the product (e.g., sitOn for chairs and use for tables).
+
+2. **Concrete Products (VictorianChair, ModernChair, VictorianTable, ModernTable):** These are the specific implementations of the products. Each product implements the corresponding interface and provides the specific behavior.
+
+3. **Abstract Factory (FurnitureFactory):** This interface declares methods for creating abstract products. It has methods createChair and createTable to create chairs and tables, respectively.
+
+4. **Concrete Factories (VictorianFurnitureFactory, ModernFurnitureFactory):** These classes implement the FurnitureFactory interface. Each concrete factory is responsible for creating a specific set of related products. For example, VictorianFurnitureFactory creates Victorian-style chairs and tables.
+
+5. **Client:** The client uses a furniture factory to create and use a family of related products. The client does not know the concrete classes of the products; it only interacts with the interfaces provided by the abstract products and factories.
+6. This implementation ensures that the client code is independent of the specific types of products created, adhering to the principle of programming to an interface, not an implementation. This makes the system more flexible and easier to extend with new types of products and factories.
+
+### Diagram
+
+```
+               +--------------------+
+               |   FurnitureFactory |
+               +--------------------+
+               | +createChair()     |
+               | +createTable()     |
+               +--------------------+
+                        ^
+                        |
+       +----------------+----------------+
+       |                                 |
++-----------------------+       +----------------------+
+| VictorianFurnitureFactory |   | ModernFurnitureFactory |
++-----------------------+       +----------------------+
+| +createChair()        |       | +createChair()       |
+| +createTable()        |       | +createTable()       |
++-----------------------+       +----------------------+
+        ^                                ^
+        |                                |
++---------------+                +---------------+
+| VictorianChair |               | ModernChair    |
++---------------+                +---------------+
+| +sitOn()      |                | +sitOn()       |
++---------------+                +---------------+
+        ^
+        |
++---------------+                +---------------+
+| VictorianTable |               | ModernTable    |
++---------------+                +---------------+
+| +use()        |                | +use()         |
++---------------+                +---------------+
+```
+
+### Code
+
+```java
+// Abstract Product A
+public interface Chair {
+    void sitOn(); // Method to sit on the chair
+}
+
+// Abstract Product B
+public interface Table {
+    void use(); // Method to use the table
+}
+```
+
+```java
+// Concrete Product A1 - Victorian style chair
+public class VictorianChair implements Chair {
+    @Override
+    public void sitOn() {
+        System.out.println("Sitting on a Victorian Chair");
+    }
+}
+
+// Concrete Product A2 - Modern style chair
+public class ModernChair implements Chair {
+    @Override
+    public void sitOn() {
+        System.out.println("Sitting on a Modern Chair");
+    }
+}
+
+// Concrete Product B1 - Victorian style table
+public class VictorianTable implements Table {
+    @Override
+    public void use() {
+        System.out.println("Using a Victorian Table");
+    }
+}
+
+// Concrete Product B2 - Modern style table
+public class ModernTable implements Table {
+    @Override
+    public void use() {
+        System.out.println("Using a Modern Table");
+    }
+}
+
+```
+
+```java
+// Abstract Factory interface that declares creation methods for each type of product
+public interface FurnitureFactory {
+    Chair createChair(); // Method to create a chair
+    Table createTable(); // Method to create a table
+}
+```
+
+```java
+// Concrete Factory 1 - Creates Victorian style furniture
+public class VictorianFurnitureFactory implements FurnitureFactory {
+    @Override
+    public Chair createChair() {
+        return new VictorianChair(); // Creates a Victorian style chair
+    }
+
+    @Override
+    public Table createTable() {
+        return new VictorianTable(); // Creates a Victorian style table
+    }
+}
+
+// Concrete Factory 2 - Creates Modern style furniture
+public class ModernFurnitureFactory implements FurnitureFactory {
+    @Override
+    public Chair createChair() {
+        return new ModernChair(); // Creates a Modern style chair
+    }
+
+    @Override
+    public Table createTable() {
+        return new ModernTable(); // Creates a Modern style table
+    }
+}
+```
+
+```java
+public class Client {
+    private Chair chair;
+    private Table table;
+
+    // Client uses a FurnitureFactory to create specific types of furniture
+    public Client(FurnitureFactory factory) {
+        chair = factory.createChair(); // Create a chair
+        table = factory.createTable(); // Create a table
+    }
+
+    // Use the created furniture
+    public void useFurniture() {
+        chair.sitOn(); // Use the chair
+        table.use(); // Use the table
+    }
+
+    public static void main(String[] args) {
+        // Create a Victorian furniture factory
+        FurnitureFactory victorianFactory = new VictorianFurnitureFactory();
+        // Create a client with Victorian furniture
+        Client victorianClient = new Client(victorianFactory);
+        victorianClient.useFurniture(); // Use the Victorian furniture
+
+        // Create a Modern furniture factory
+        FurnitureFactory modernFactory = new ModernFurnitureFactory();
+        // Create a client with Modern furniture
+        Client modernClient = new Client(modernFactory);
+        modernClient.useFurniture(); // Use the Modern furniture
+    }
+}
+```
+
+**Output:**
+```
+Sitting on a Victorian Chair
+Using a Victorian Table
+Sitting on a Modern Chair
+Using a Modern Table
+```
+
 ## Advantages of using Abstract Factory Pattern
 This pattern is particularly useful when the client doesn’t know exactly what type to create.
 
@@ -228,3 +408,40 @@ This pattern is particularly useful when the client doesn’t know exactly what 
 - **Not dealing with multiple families of objects:** If your application is not concerned with creating families of related objects and you are dealing with single, independent objects, using the Abstract Factory pattern may be overkill.
 - **The overhead is too high:** In some cases, the overhead of creating and maintaining multiple factories may outweigh the benefits, especially in smaller applications or when there is no need for extensive configurability.
 - **A simpler solution is sufficient:** If a simpler creational pattern, such as the Factory Method or Builder pattern, meets your requirements, there may be no need to introduce the additional complexity of the Abstract Factory pattern.
+
+## Common Interview Questions on Abstract Factory Pattern
+
+**1. What is the Abstract Factory pattern?**
+
+The Abstract Factory pattern is a creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+**2. When would you use the Abstract Factory pattern?**
+
+Use the Abstract Factory pattern when you need to create a set of related objects that must be used together and when you want to ensure that the created objects are compatible.
+
+**3. How does the Abstract Factory pattern differ from the Factory Method pattern?**
+
+The Factory Method pattern is used to create a single product, whereas the Abstract Factory pattern is used to create families of related or dependent products.
+
+**4. Can you give an example of where the Abstract Factory pattern might be used in real-world applications?**
+
+The Abstract Factory pattern is often used in GUI toolkits (like Java's Swing or AWT) where you might have different look-and-feel themes. Each theme would be a factory that creates a set of widgets (buttons, text fields, etc.) consistent with that theme.
+
+**5. What are the benefits of using the Abstract Factory pattern?**
+
+- The benefits include:
+  - Ensuring consistency among products created by the factory.
+  - Encapsulating the creation logic of a set of related products.
+  - Making it easy to swap between different families of products by changing the factory.
+
+**6. What are the drawbacks of using the Abstract Factory pattern?**
+- The drawbacks include:
+  - The complexity of adding new products to the factory, which might require changes to the factory interface and all concrete factories.
+  - The pattern can lead to a proliferation of classes, making the codebase harder to maintain.
+
+**7. How would you implement the Abstract Factory pattern if you had to support adding new products in the future?**
+- To support adding new products, you could use the Abstract Factory pattern in combination with the Prototype pattern. This allows new products to be added without changing the factory interface, as the factory would clone prototype instances rather than create new ones directly.
+
+**8. Is the Abstract Factory pattern a good choice for building a simple application? Why or why not?**
+
+For simple applications, the Abstract Factory pattern might be overkill. It adds unnecessary complexity if the application doesn't require the flexibility of creating families of related objects or if the number of products is very small and unlikely to change.
