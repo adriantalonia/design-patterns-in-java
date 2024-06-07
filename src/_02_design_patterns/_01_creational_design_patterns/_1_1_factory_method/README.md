@@ -16,6 +16,11 @@
       * [What are the problems with the above design?](#what-are-the-problems-with-the-above-design)
       * [How do we avoid the problem?](#how-do-we-avoid-the-problem)
     * [With Factory Method Design Pattern](#with-factory-method-design-pattern)
+    * [Animal Factory Method Design Pattern Example](#animal-factory-method-design-pattern-example)
+      * [Class Diagram](#class-diagram)
+  * [Use Cases of the Factory Method Design Pattern](#use-cases-of-the-factory-method-design-pattern)
+  * [Advantages of Factory Method Design Pattern](#advantages-of-factory-method-design-pattern)
+  * [Disadvantages of Factory Method Design Pattern](#disadvantages-of-factory-method-design-pattern)
 <!-- TOC -->
 
 It is a creational design pattern that talks about the creation of an object. The factory design pattern says to define an interface ( A java interface or an abstract class) for creating the object and let the subclasses decide which class to instantiate.
@@ -237,6 +242,112 @@ I am four wheeler
 - **TwoWheeler and FourWheeler** are concrete product classes representing different types of vehicles, implementing the printVehicle() method.
 - **VehicleFactory** acts as the Creator interface (Factory Interface) with a method createVehicle() representing the factory method.
 - **TwoWheelerFactory and FourWheelerFactory** are concrete creator classes (Concrete Factories) implementing the VehicleFactory interface to create instances of specific types of vehicles.
+
+### Animal Factory Method Design Pattern Example
+
+In the upcoming example, an abstract creator class called AnimalFactory defines the
+basic structure of the program. As per the definition, the instantiation process is carried
+out through the subclasses that derive from this abstract class.
+
+Using the same inheritance hierarchy as the Simple Factory pattern,
+so this time also you’ll see that both the Dog and Tiger classes implement the Animal
+interface.
+
+#### Class Diagram
+
+![img](/src/resources/img/creational/factory/factory-method-class-diagram.png)
+
+### Code
+
+```java
+public interface Animal {
+    void displayBehavior();
+}
+
+public class Dog implements Animal {
+
+  public Dog() {
+    System.out.println("\nA dog is created.");
+  }
+
+  @Override
+  public void displayBehavior() {
+    System.out.println("It says: Bow-Wow.");
+    System.out.println ("It prefers barking.");
+  }
+}
+
+public class Tiger implements Animal {
+
+  public Tiger() {
+    System.out.println("\nA tiger is created");
+  }
+
+  @Override
+  public void displayBehavior() {
+    System.out.println("Tiger says: Halum.");
+    System.out.println("It loves to roam in a jungle.");
+  }
+}
+```
+
+```java
+public abstract class AnimalFactory {
+    // This is the "factory method"
+    // Notice that I defer the instantiation
+    // process to the subclasses.
+    protected abstract Animal createAnimal();
+}
+
+public class DogFactory  extends AnimalFactory {
+  // Creating and returning a 'Dog' instance
+  @Override
+  protected Animal createAnimal() {
+    return new Dog();
+  }
+}
+
+public class TigerFactory extends AnimalFactory {
+  // Creating and returning a 'Tiger' instance
+  @Override
+  protected Animal createAnimal() {
+    return new Tiger();
+  }
+}
+```
+
+```java
+public class AnimalClient {
+    public static void main(String[] args) {
+        System.out.println("*** Factory Method Pattern Demo.***");
+        AnimalFactory factory;
+        Animal animal;
+        // Create a tiger and display its behavior
+        // using TigerFactory
+        factory = new TigerFactory();
+        animal = factory.createAnimal();
+        animal.displayBehavior();
+        // Create a dog and display its behavior
+        factory = new DogFactory();
+        animal = factory.createAnimal();
+        animal.displayBehavior();
+    }
+}
+```
+
+**Output:**
+```
+*** Factory Method Pattern Demo.***
+
+A tiger is created
+Tiger says: Halum.
+It loves to roam in a jungle.
+
+A dog is created.
+It says: Bow-Wow.
+It prefers barking.
+```
+
 
 ## Use Cases of the Factory Method Design Pattern
 
