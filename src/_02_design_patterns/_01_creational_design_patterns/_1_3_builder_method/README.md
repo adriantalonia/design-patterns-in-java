@@ -5,6 +5,7 @@
   * [GoF Definition](#gof-definition)
   * [Concept](#concept)
   * [Components of the Builder Design Pattern](#components-of-the-builder-design-pattern)
+  * [Builder Design Pattern Example](#builder-design-pattern-example)
 <!-- TOC -->
 
 The Builder Design Pattern is a creational pattern used in software design to construct a complex object step by step. It allows the construction of a product in a step-by-step fashion, where the construction process can vary based on the type of product being built. The pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
@@ -60,3 +61,12 @@ The Product is the complex object that the Builder pattern is responsible for co
    - It creates a Builder object and passes it to the Director to initiate the construction process.
    - The Client may retrieve the final product from the Builder after construction is complete.
 
+## Builder Design Pattern Example
+
+**Problem Statement:**
+
+> You are tasked with implementing a system for building custom computers. Each computer can have different configurations based on user preferences. The goal is to provide flexibility in creating computers with varying CPUs, RAM, and storage options.
+
+Implement the Builder design pattern to achieve this, allowing the construction of computers through a step-by-step process. Use the provided components – Product (Computer), Builder interface, ConcreteBuilder (GamingComputerBuilder), Director, and Client
+
+![img](/src/resources/img/creational/builder/builder-diagram-example.png)
