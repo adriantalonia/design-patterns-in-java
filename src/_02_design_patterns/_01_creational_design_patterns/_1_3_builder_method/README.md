@@ -70,3 +70,130 @@ The Product is the complex object that the Builder pattern is responsible for co
 Implement the Builder design pattern to achieve this, allowing the construction of computers through a step-by-step process. Use the provided components – Product (Computer), Builder interface, ConcreteBuilder (GamingComputerBuilder), Director, and Client
 
 ![img](/src/resources/img/creational/builder/builder-diagram-example.png)
+
+**Code:**
+
+```java
+// Product
+public class Computer {
+    private String cpu;
+    private String ram;
+    private String storage;
+
+    // Setters for setting the configuration details
+    public void setCPU(String cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setRAM(String ram) {
+        this.ram = ram;
+    }
+
+    public void setStorage(String storage) {
+        this.storage = storage;
+    }
+
+    // Method to display the configuration of the computer
+    public void displayInfo() {
+        System.out.println("Computer Configuration:");
+        System.out.println("CPU: " + cpu);
+        System.out.println("RAM: " + ram);
+        System.out.println("Storage: " + storage);
+    }
+}
+
+// Builder interface
+public interface Builder {
+    void buildCPU();
+    void buildRAM();
+    void buildStorage();
+    Computer getResult();
+}
+
+// ConcreteBuilder for Gaming Computer
+public class GamingComputerBuilder implements Builder {
+    private Computer computer;
+
+    public GamingComputerBuilder() {
+        this.computer = new Computer();
+    }
+
+    @Override
+    public void buildCPU() {
+        computer.setCPU("Gaming CPU");
+    }
+
+    @Override
+    public void buildRAM() {
+        computer.setRAM("16GB DDR4");
+    }
+
+    @Override
+    public void buildStorage() {
+        computer.setStorage("1TB SSD");
+    }
+
+    @Override
+    public Computer getResult() {
+        return computer;
+    }
+}
+
+// ConcreteBuilder for Office Computer
+public class OfficeComputerBuilder implements Builder {
+    private Computer computer;
+
+    public OfficeComputerBuilder() {
+        this.computer = new Computer();
+    }
+
+    @Override
+    public void buildCPU() {
+        computer.setCPU("Office CPU");
+    }
+
+    @Override
+    public void buildRAM() {
+        computer.setRAM("8GB DDR4");
+    }
+
+    @Override
+    public void buildStorage() {
+        computer.setStorage("512GB SSD");
+    }
+
+    @Override
+    public Computer getResult() {
+        return computer;
+    }
+}
+
+// Director
+public class ComputerDirector {
+    // The construct method takes a Builder object and calls its methods
+    public void construct(Builder builder) {
+        builder.buildCPU();
+        builder.buildRAM();
+        builder.buildStorage();
+    }
+}
+
+// Client
+public class Client {
+    public static void main(String[] args) {
+        // Using the GamingComputerBuilder to create a gaming computer
+        Builder gamingBuilder = new GamingComputerBuilder();
+        ComputerDirector director = new ComputerDirector();
+        director.construct(gamingBuilder);
+        Computer gamingComputer = gamingBuilder.getResult();
+        gamingComputer.displayInfo();
+
+        // Using the OfficeComputerBuilder to create an office computer
+        Builder officeBuilder = new OfficeComputerBuilder();
+        director.construct(officeBuilder);
+        Computer officeComputer = officeBuilder.getResult();
+        officeComputer.displayInfo();
+    }
+}
+
+```
