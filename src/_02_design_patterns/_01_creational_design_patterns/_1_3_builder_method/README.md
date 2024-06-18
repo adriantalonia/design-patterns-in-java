@@ -197,3 +197,10 @@ public class Client {
 }
 
 ```
+
+## Implementation
+In demonstration 1, Builder is used for the Builder interface and CarBuilder and
+MotorCycleBuilder are two ConcreteBuilders. Car and MotorCycle are the concrete
+products. The Director class has its usual meaning: it instructs a builder to make a
+product. In demonstration 1, CarDirector and MotorCycleDirector are the concrete
+directors that inherit from the abstract class Director.
