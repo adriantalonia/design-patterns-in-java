@@ -6,6 +6,7 @@
   * [Concept](#concept)
   * [Components of the Builder Design Pattern](#components-of-the-builder-design-pattern)
   * [Builder Design Pattern Example](#builder-design-pattern-example)
+  * [Implementation](#implementation)
 <!-- TOC -->
 
 The Builder Design Pattern is a creational pattern used in software design to construct a complex object step by step. It allows the construction of a product in a step-by-step fashion, where the construction process can vary based on the type of product being built. The pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
@@ -195,10 +196,10 @@ public class Client {
         officeComputer.displayInfo();
     }
 }
-
 ```
 
 ## Implementation
+
 In demonstration 1, Builder is used for the Builder interface and CarBuilder and
 MotorCycleBuilder are two ConcreteBuilders. Car and MotorCycle are the concrete
 products. The Director class has its usual meaning: it instructs a builder to make a
