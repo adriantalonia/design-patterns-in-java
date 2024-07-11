@@ -7,6 +7,7 @@
   * [Components of the Builder Design Pattern](#components-of-the-builder-design-pattern)
   * [Builder Design Pattern Example](#builder-design-pattern-example)
   * [Implementation](#implementation)
+    * [Class Diagram](#class-diagram)
 <!-- TOC -->
 
 The Builder Design Pattern is a creational pattern used in software design to construct a complex object step by step. It allows the construction of a product in a step-by-step fashion, where the construction process can vary based on the type of product being built. The pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
@@ -198,12 +199,185 @@ public class Client {
 }
 ```
 
-## Implementation
+## Implementation Example #2
 
-In demonstration 1, Builder is used for the Builder interface and CarBuilder and
+Builder is used for the Builder interface and CarBuilder and
 MotorCycleBuilder are two ConcreteBuilders. Car and MotorCycle are the concrete
 products. The Director class has its usual meaning: it instructs a builder to make a
 product. In demonstration 1, CarDirector and MotorCycleDirector are the concrete
 directors that inherit from the abstract class Director.
 
 ### Class Diagram
+
+![img](/src/resources/img/creational/builder/builder-class-diagram-implementation.png)
+
+### Code Car Builder Example #2
+
+```java
+public interface Builder {
+    void addBrand();
+    void buildBody();
+    void insertWheels();
+    Vehicle getVehicle();
+}
+
+public class CarBuilder implements Builder {
+
+    Car car;
+
+    public CarBuilder() {
+        car = new Car("Ford");
+    }
+
+    @Override
+    public void addBrandName() {
+        car.add("Adding the car brand: " + car.brandName);
+    }
+
+    @Override
+    public void buildBody() {
+        car.add(" Making the car body.");
+    }
+
+    @Override
+    public void insertWheels() {
+        car.add(" 4 wheels are added to the car.");
+    }
+
+    @Override
+    public Vehicle getVehicle() {
+        return car;
+    }
+}
+
+public class MotorCycleBuilder implements Builder {
+    MotorCycle motorCycle;
+
+    public MotorCycleBuilder() {
+        motorCycle = new MotorCycle("Honda");
+    }
+
+    @Override
+    public void addBrandName() {
+        motorCycle.add(" Adding the brand name: " + motorCycle.brandName);
+    }
+
+    @Override
+    public void buildBody() {
+        motorCycle.add(" Making the body of the motorcycle.");
+    }
+
+    @Override
+    public void insertWheels() {
+        motorCycle.add(" 2 wheels are added to the motorcycle.");
+    }
+
+    @Override
+    public Vehicle getVehicle() {
+        return motorCycle;
+    }
+}
+
+abstract class Vehicle {
+    private LinkedList<String> parts;
+
+    public Vehicle() {
+        parts = new LinkedList<>();
+    }
+
+    public void add(String part) {
+        parts.add(part);
+    }
+
+    public void showProduct () {
+        System.out.println("There are the construction sequences: ");
+        for (String part : parts) {
+            System.out.println(part);
+        }
+    }
+}
+
+
+public class Car {
+    String brandName;
+
+    public Car(String brandName) {
+        this.brandName = brandName;
+        System.out.println("\nWe are about to make a " +
+                brandName + " car.");
+    }
+}
+
+public class MotorCycle extends Vehicle {
+    String brandName;
+
+    public MotorCycle(String brandName) {
+        this.brandName = brandName;
+        System.out.println("\nWe are about to make a " +
+                brandName + " motorcycle.");
+    }
+}
+
+abstract class Director {
+    // Director knows how to use/instruct the
+    // builder to create a vehicle.
+    public abstract Vehicle instruct(Builder builder);
+}
+
+public class CarDirector extends Director {
+    // The car director follows
+    // its own sequence:
+    // Make body-> add wheels->then add the brand name.
+    public Vehicle instruct(Builder builder) {
+        builder.buildBody();
+        builder.insertWheels();
+        builder.addBrandName();
+        return builder.getVehicle();
+    }
+}
+
+public class MotorCycleDirector extends Director {
+    // The motor cycle director follows
+    // its own sequence:
+    // Add brand name-> make body-> insert wheels.
+    public Vehicle instruct(Builder builder) {
+        builder.addBrandName();
+        builder.buildBody();
+        builder.insertWheels();
+        return builder.getVehicle();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        System.out.println("*** Builder Pattern Demonstration. ***");
+        // Making a car
+        Builder builder = new CarBuilder();
+        Director director = new CarDirector();
+        Vehicle vehicle = director.instruct(builder);
+        vehicle.showProduct();
+        // Making a motorcycle
+        builder = new MotorCycleBuilder();
+        director = new MotorCycleDirector();
+        vehicle = director.instruct(builder);
+        vehicle.showProduct();
+    }
+}
+```
+
+Result:
+```
+*** Builder Pattern Demonstration. ***
+
+We are about to make a Ford car.
+There are the construction sequences: 
+ Making the car body.
+ 4 wheels are added to the car.
+Adding the car brand: Ford
+
+We are about to make a Honda motorcycle.
+There are the construction sequences: 
+ Adding the brand name: Honda
+ Making the body of the motorcycle.
+ 2 wheels are added to the motorcycle.
+```
