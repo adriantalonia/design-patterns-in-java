@@ -6,8 +6,10 @@
   * [Concept](#concept)
   * [Components of the Builder Design Pattern](#components-of-the-builder-design-pattern)
   * [Builder Design Pattern Example](#builder-design-pattern-example)
-  * [Implementation](#implementation)
+  * [Implementation Example #2](#implementation-example-2)
     * [Class Diagram](#class-diagram)
+    * [Code Car Builder Example #2](#code-car-builder-example-2)
+  * [Q&A Session](#qa-session)
 <!-- TOC -->
 
 The Builder Design Pattern is a creational pattern used in software design to construct a complex object step by step. It allows the construction of a product in a step-by-step fashion, where the construction process can vary based on the type of product being built. The pattern separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
@@ -381,3 +383,21 @@ There are the construction sequences:
  Making the body of the motorcycle.
  2 wheels are added to the motorcycle.
 ```
+
+## Q&A Session
+
+1) **What is the advantage of using a Builder pattern?**
+
+Here are some advantages:
+
+- You direct the builder to build the objects step by step, and you
+promote encapsulation by hiding the details of the complex
+construction process. The director can retrieve the final product from
+the builder when the whole construction is over. In general, at a high
+level, you seem to have only one method that makes the complete
+product, but other internal methods are involved in the creation
+process. So, you have finer control over the construction process.
+- Using this pattern, the same construction process can produce
+different products.
+- In short, by changing the type of a builder, you change the internal
+representation of the product.
