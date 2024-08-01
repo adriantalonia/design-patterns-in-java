@@ -401,3 +401,5 @@ process. So, you have finer control over the construction process.
 different products.
 - In short, by changing the type of a builder, you change the internal
 representation of the product.
+
+2) **What are the drawbacks associated with a Builder pattern?**
