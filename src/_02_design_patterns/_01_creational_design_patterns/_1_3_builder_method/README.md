@@ -403,3 +403,10 @@ different products.
 representation of the product.
 
 2) **What are the drawbacks associated with a Builder pattern?**
+
+Here are some challenges:
+- It is not suitable if you want to deal with mutable objects (which can
+be modified later).
+- You may need to duplicate some portion of the code. These
+duplications may cause a performance impact in some contexts.
+- To create more products, you need to create more concrete builders.
