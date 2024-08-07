@@ -410,3 +410,8 @@ be modified later).
 - You may need to duplicate some portion of the code. These
 duplications may cause a performance impact in some contexts.
 - To create more products, you need to create more concrete builders.
+
+3) **In demonstration 1, Builder is an interface. Could you use an abstract class
+   instead of the interface in the illustration of this pattern?** 
+
+    Yes. You could use an abstract class instead of an interface in this example. 
