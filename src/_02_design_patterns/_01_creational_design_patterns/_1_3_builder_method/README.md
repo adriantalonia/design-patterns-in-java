@@ -414,4 +414,14 @@ duplications may cause a performance impact in some contexts.
 3) **In demonstration 1, Builder is an interface. Could you use an abstract class
    instead of the interface in the illustration of this pattern?** 
 
-    Yes. You could use an abstract class instead of an interface in this example. 
+    Yes. You could use an abstract class instead of an interface in this example.
+
+4) **How do you decide whether to use an abstract class or an interface in an
+application?**
+
+If you want to have some centralized or default behaviors, an abstract class is a
+better choice. In those cases, you can provide some default implementation. On the
+other hand, the interface implementation starts from scratch and indicates some kind of
+rules/contracts such as what is to be done, but it does not enforce the “how” part upon
+you. Also, interfaces are preferred when you try to implement the concept of multiple
+inheritance.
